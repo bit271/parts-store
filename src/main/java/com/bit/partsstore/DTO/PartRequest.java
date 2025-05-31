@@ -1,6 +1,6 @@
-package com.bit.sparestore.DTO;
+package com.bit.partsstore.DTO;
 
-public class DetailRequest {
+public class PartRequest {
     private Integer carId;           // ID машины
     private Integer categoryId;      // ID категории
     private String  name;

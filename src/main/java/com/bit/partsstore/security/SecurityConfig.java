@@ -1,4 +1,4 @@
-package com.bit.sparestore.security;
+package com.bit.partsstore.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

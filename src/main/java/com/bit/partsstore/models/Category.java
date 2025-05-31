@@ -1,10 +1,10 @@
-package com.bit.sparestore.models;
+package com.bit.partsstore.models;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "models")
-public class Model {
+@Table(name = "categories")
+public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,12 +12,12 @@ public class Model {
     @Column(nullable = false, unique = true)
     private String name;
 
-    public Model(Integer id, String name) {
+    public Category(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Model() {}
+    public Category() {}
 
     public Integer getId() {
         return id;

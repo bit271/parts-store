@@ -1,4 +1,4 @@
-package com.bit.sparestore.models;
+package com.bit.partsstore.models;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -34,5 +34,5 @@ public class Order {
     private Integer totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderDetail> orderDetails;
+    private List<OrderPart> orderParts;
 }

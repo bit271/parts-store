@@ -1,10 +1,10 @@
-package com.bit.sparestore.models;
+package com.bit.partsstore.models;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "order_details")
-public class OrderDetail {
+@Table(name = "order_parts")
+public class OrderPart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -15,7 +15,7 @@ public class OrderDetail {
 
     @ManyToOne
     @JoinColumn(name = "detail_id", nullable = false)
-    private Detail detail;
+    private Part part;
 
     @Column(nullable = false)
     private Integer count;

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bit</groupId>
-	<artifactId>sparestore</artifactId>
+	<artifactId>partsstore</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>sparestore</name>
+	<name>partsstore</name>
 	<description>Auto parts store web-project using Spring Boot</description>
 	<url/>
 	<licenses>

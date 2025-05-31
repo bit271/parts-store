@@ -1,4 +1,4 @@
-package com.bit.sparestore.models;
+package com.bit.partsstore.models;
 
 import jakarta.persistence.*;
 

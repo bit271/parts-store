@@ -1,10 +1,10 @@
-package com.bit.sparestore.models;
+package com.bit.partsstore.models;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "details")
-public class Detail {
+public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,7 +33,7 @@ public class Detail {
     @Column(nullable = false)
     private Integer price;
 
-    public Detail(Integer id, Car car, Category category, String name, Integer availableCount, String catalogNum, String description, String image, Integer price) {
+    public Part(Integer id, Car car, Category category, String name, Integer availableCount, String catalogNum, String description, String image, Integer price) {
         this.id = id;
         this.car = car;
         this.category = category;
@@ -45,7 +45,7 @@ public class Detail {
         this.price = price;
     }
 
-    public Detail() {}
+    public Part() {}
 
     public Integer getId() {
         return id;

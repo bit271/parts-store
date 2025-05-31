@@ -1,6 +1,6 @@
-package com.bit.sparestore.DTO;
+package com.bit.partsstore.DTO;
 
-public class DetailResponse {
+public class PartResponse {
     private Integer id;
     private String  name;
     private String  catalogNum;
@@ -11,9 +11,9 @@ public class DetailResponse {
     private String  carName;
     private String  categoryName;
 
-    public DetailResponse() {}
+    public PartResponse() {}
 
-    public DetailResponse(Integer id, String name, String catalogNum, String description, String image, Integer price, Integer availableCount, String carName, String categoryName) {
+    public PartResponse(Integer id, String name, String catalogNum, String description, String image, Integer price, Integer availableCount, String carName, String categoryName) {
         this.id = id;
         this.name = name;
         this.catalogNum = catalogNum;

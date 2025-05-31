@@ -1,13 +1,13 @@
-package com.bit.sparestore;
+package com.bit.partsstore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SparestoreApplication {
+public class PartsStoreApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SparestoreApplication.class, args);
+		SpringApplication.run(PartsStoreApplication.class, args);
 	}
 
 }

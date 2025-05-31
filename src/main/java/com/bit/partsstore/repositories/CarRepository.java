@@ -1,6 +1,6 @@
-package com.bit.sparestore.repositories;
+package com.bit.partsstore.repositories;
 
-import com.bit.sparestore.models.Car;
+import com.bit.partsstore.models.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
