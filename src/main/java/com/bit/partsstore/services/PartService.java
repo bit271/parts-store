@@ -49,8 +49,8 @@ public class PartService {
         part.setDescription(request.getDescription());
         part.setImage(request.getImage());
 
-        Part saved = partRepository.save(part);
-        return mapToResponse(saved);
+        Part savedPart = partRepository.save(part);
+        return mapToResponse(savedPart);
     }
 
     private PartResponse mapToResponse(Part part) {
