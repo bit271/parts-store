@@ -4,17 +4,17 @@ import com.bit.partsstore.DTO.CarRequest;
 import com.bit.partsstore.DTO.CarResponse;
 import com.bit.partsstore.services.CarService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public class CarController {
+@RestController
+@RequestMapping("/api/cars")
+public class CarAdminController {
 
     private final CarService carService;
 
-    public CarController(CarService carService) {
+    public CarAdminController(CarService carService) {
         this.carService = carService;
     }
 
@@ -22,6 +22,12 @@ public class CarController {
     public ResponseEntity<List<CarResponse>> getAllCars() {
         List<CarResponse> cars = carService.getAllCars();
         return ResponseEntity.ok(cars);
+    }
+
+    @PostMapping
+    public ResponseEntity<CarResponse> addCar(@RequestBody CarRequest request) {
+        CarResponse response = carService.addCar(request);
+        return ResponseEntity.ok(response);
     }
 
 }
