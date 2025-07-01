@@ -15,6 +15,10 @@ import java.util.List;
 
 @Service
 public class CarService {
+
+    private static final String BRAND_NOT_FOUND = "Brand not found";
+    private static final String MODEL_NOT_FOUND = "Model not found";
+
     private final CarRepository carRepository;
     private final BrandRepository brandRepository;
     private final ModelRepository modelRepository;
@@ -25,31 +29,33 @@ public class CarService {
         this.modelRepository = modelRepository;
     }
 
-    public List<CarResponse> getAllCars() {
-        return carRepository.findAll().stream().map(this::mapToResponse).toList();
+    public List<CarResponse> getCars() {
+        return carRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
     }
 
     public CarResponse addCar(CarRequest request) {
+        Car car = createCarFromRequest(request);
+        Car savedCar = carRepository.save(car);
+        return mapToResponse(savedCar);
+    }
+
+    private Car createCarFromRequest(CarRequest request) {
         Brand brand = brandRepository.findById(request.getBrandId())
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+                .orElseThrow(() -> new RuntimeException(BRAND_NOT_FOUND));
         Model model = modelRepository.findById(request.getModelId())
-                .orElseThrow(() -> new RuntimeException("Model not found"));
+                .orElseThrow(() -> new RuntimeException(MODEL_NOT_FOUND));
 
         Car car = new Car();
-
         car.setBrand(brand);
         car.setModel(model);
-
-        //necessarily
         car.setName(request.getName());
         car.setYear(request.getYear());
         car.setDateAdd(LocalDate.now());
-
-        //optionally
         car.setImage(request.getImage());
-
-        Car savedCar = carRepository.save(car);
-        return mapToResponse(savedCar);
+        return car;
     }
 
     private CarResponse mapToResponse(Car car) {
@@ -62,5 +68,4 @@ public class CarService {
                 car.getModel().getName()
         );
     }
-
 }
