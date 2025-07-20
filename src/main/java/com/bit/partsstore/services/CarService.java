@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CarService {
@@ -22,11 +23,16 @@ public class CarService {
     private final CarRepository carRepository;
     private final BrandRepository brandRepository;
     private final ModelRepository modelRepository;
+    private final ImageStorageService imageStorageService;
 
-    public CarService(CarRepository carRepository, BrandRepository brandRepository, ModelRepository modelRepository) {
+    public CarService(CarRepository carRepository,
+                      BrandRepository brandRepository,
+                      ModelRepository modelRepository,
+                      ImageStorageService imageStorageService) {
         this.carRepository = carRepository;
         this.brandRepository = brandRepository;
         this.modelRepository = modelRepository;
+        this.imageStorageService = imageStorageService;
     }
 
     public List<CarResponse> getCars() {
@@ -37,9 +43,14 @@ public class CarService {
     }
 
     public CarResponse addCar(CarRequest request) {
-        Car car = createCarFromRequest(request);
-        Car savedCar = carRepository.save(car);
-        return mapToResponse(savedCar);
+        try {
+            Car car = createCarFromRequest(request);
+            Car savedCar = carRepository.save(car);
+            imageStorageService.saveCarImage(request.getImage(), car.getImageName());
+            return mapToResponse(savedCar);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add car", e);
+        }
     }
 
     private Car createCarFromRequest(CarRequest request) {
@@ -47,14 +58,16 @@ public class CarService {
                 .orElseThrow(() -> new RuntimeException(BRAND_NOT_FOUND));
         Model model = modelRepository.findById(request.getModelId())
                 .orElseThrow(() -> new RuntimeException(MODEL_NOT_FOUND));
+        String uniqueImageName = UUID.randomUUID() + "_" + request.getImage().getOriginalFilename();
 
         Car car = new Car();
-        car.setBrand(brand);
-        car.setModel(model);
+        car.setDateAdd(LocalDate.now());
+        car.setImageName(uniqueImageName);
         car.setName(request.getName());
         car.setYear(request.getYear());
-        car.setDateAdd(LocalDate.now());
-        car.setImage(request.getImage());
+        car.setBrand(brand);
+        car.setModel(model);
+
         return car;
     }
 
@@ -63,9 +76,10 @@ public class CarService {
                 car.getId(),
                 car.getName(),
                 car.getYear(),
-                car.getImage(),
+                car.getImageName(),
                 car.getBrand().getName(),
-                car.getModel().getName()
+                car.getModel().getName(),
+                car.getDateAdd()
         );
     }
 }

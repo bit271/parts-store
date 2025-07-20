@@ -55,7 +55,7 @@ public class PartService {
         part.setPrice(partRequest.getPrice());
         part.setCatalogNum(partRequest.getCatalogNum());
         part.setDescription(partRequest.getDescription());
-        part.setImage(partRequest.getImage());
+        part.setImageName(partRequest.getImage());
         return part;
     }
 
@@ -65,7 +65,7 @@ public class PartService {
                 part.getName(),
                 part.getCatalogNum(),
                 part.getDescription(),
-                part.getImage(),
+                part.getImageName(),
                 part.getPrice(),
                 part.getAvailableCount(),
                 part.getCar().getName(),

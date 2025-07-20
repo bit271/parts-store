@@ -1,4 +1,4 @@
-package com.bit.partsstore.security;
+package com.bit.partsstore.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +36,8 @@ public class SecurityConfig {
     /**
      * Defines a CORS configuration source for handling cross-origin requests.
      *
-     * Allows requests from the frontend at http://localhost:5173 with credentials,
-     * and permits common HTTP methods and headers.
+     * Allows requests from the frontend at http://localhost:5173 with credentials and permits for
+     * common HTTP methods and headers.
      *
      * @return a configured CorsConfigurationSource applied to all endpoints
      */

@@ -1,16 +1,18 @@
 package com.bit.partsstore.DTO;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class CarRequest {
     private String  name;
     private Integer year;
     private Integer brandId;
     private Integer modelId;
-    private String  image;
+    private MultipartFile image;
 
     public CarRequest() {
     }
 
-    public CarRequest(String name, Integer year, Integer brandId, Integer modelId, String image) {
+    public CarRequest(String name, Integer year, Integer brandId, Integer modelId, MultipartFile image) {
         this.name = name;
         this.year = year;
         this.brandId = brandId;
@@ -50,11 +52,11 @@ public class CarRequest {
         this.modelId = modelId;
     }
 
-    public String getImage() {
+    public MultipartFile getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(MultipartFile image) {
         this.image = image;
     }
 }
