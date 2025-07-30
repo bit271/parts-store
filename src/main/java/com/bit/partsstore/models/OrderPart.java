@@ -14,7 +14,7 @@ public class OrderPart {
     private Order order;
 
     @ManyToOne
-    @JoinColumn(name = "detail_id", nullable = false)
+    @JoinColumn(name = "part_id", nullable = false)
     private Part part;
 
     @Column(nullable = false)

@@ -1,22 +1,24 @@
 package com.bit.partsstore.DTO;
 
+import java.time.LocalDate;
+
 public class CarResponse {
     private Integer id;
     private String name;
     private Integer year;
-    private String image;
+    private String imagePath;
     private String brandName;
     private String modelName;
+    private LocalDate dateAdd;
 
-    public CarResponse() {}
-
-    public CarResponse(Integer id, String name, Integer year, String image, String brandName, String modelName) {
+    public CarResponse(Integer id, String name, Integer year, String imagePath, String brandName, String modelName, LocalDate dateAdd) {
         this.id = id;
         this.name = name;
         this.year = year;
-        this.image = image;
+        this.imagePath = imagePath;
         this.brandName = brandName;
         this.modelName = modelName;
+        this.dateAdd = dateAdd;
     }
 
     public Integer getId() {
@@ -43,12 +45,12 @@ public class CarResponse {
         this.year = year;
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public String getBrandName() {
@@ -66,4 +68,13 @@ public class CarResponse {
     public void setModelName(String modelName) {
         this.modelName = modelName;
     }
+
+    public LocalDate getDateAdd() {
+        return dateAdd;
+    }
+
+    public void setDateAdd(LocalDate dateAdd) {
+        this.dateAdd = dateAdd;
+    }
+    
 }

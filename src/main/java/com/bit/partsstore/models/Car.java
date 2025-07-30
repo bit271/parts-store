@@ -28,16 +28,17 @@ public class Car {
     @Column(name = "date_add")
     private LocalDate dateAdd;
 
-    private String image;
+    @Column(name = "image_name")
+    private String imageName;
 
-    public Car(Integer id, Model model, Brand brand, String name, Integer year, LocalDate dateAdd, String image) {
+    public Car(Integer id, Model model, Brand brand, String name, Integer year, LocalDate dateAdd, String imageName) {
         this.id = id;
         this.model = model;
         this.brand = brand;
         this.name = name;
         this.year = year;
         this.dateAdd = dateAdd;
-        this.image = image;
+        this.imageName = imageName;
     }
 
     public Car() {}
@@ -90,11 +91,11 @@ public class Car {
         this.dateAdd = dateAdd;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageName(String image) {
+        this.imageName = image;
     }
 }

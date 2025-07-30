@@ -3,7 +3,7 @@ package com.bit.partsstore.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "details")
+@Table(name = "parts")
 public class Part {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,12 +28,13 @@ public class Part {
 
     private String description = null;
 
-    private String image = null;
+    @Column(name = "image_name")
+    private String imageName = null;
 
     @Column(nullable = false)
     private Integer price;
 
-    public Part(Integer id, Car car, Category category, String name, Integer availableCount, String catalogNum, String description, String image, Integer price) {
+    public Part(Integer id, Car car, Category category, String name, Integer availableCount, String catalogNum, String description, String imageName, Integer price) {
         this.id = id;
         this.car = car;
         this.category = category;
@@ -41,7 +42,7 @@ public class Part {
         this.availableCount = availableCount;
         this.catalogNum = catalogNum;
         this.description = description;
-        this.image = image;
+        this.imageName = imageName;
         this.price = price;
     }
 
@@ -103,12 +104,12 @@ public class Part {
         this.description = description;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageName(String image) {
+        this.imageName = image;
     }
 
     public Integer getPrice() {
