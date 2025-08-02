@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 public class CarResponse {
     private Integer id;
-    private String name;
+    private String description;
     private Integer year;
     private String imagePath;
     private String brandName;
     private String modelName;
     private LocalDate dateAdd;
 
-    public CarResponse(Integer id, String name, Integer year, String imagePath, String brandName, String modelName, LocalDate dateAdd) {
+    public CarResponse(Integer id, String description, Integer year, String imagePath, String brandName, String modelName, LocalDate dateAdd) {
         this.id = id;
-        this.name = name;
+        this.description = description;
         this.year = year;
         this.imagePath = imagePath;
         this.brandName = brandName;
@@ -29,12 +29,12 @@ public class CarResponse {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getYear() {

@@ -12,6 +12,7 @@ import java.util.List;
 public class BrandService {
 
     private static final String BRAND_ALREADY_EXISTS = "Brand already exists";
+    private static final String BRAND_DOESNT_FOUND = "Brand doesn't found";
     private final BrandRepository brandRepository;
 
     public BrandService(BrandRepository brandRepository) {
@@ -32,6 +33,15 @@ public class BrandService {
         Brand brand = createBrandFromRequest(request);
         Brand saved = brandRepository.save(brand);
         return mapToResponse(saved);
+    }
+
+    public Brand deleteBrand(int id) {
+        return brandRepository.findById(id)
+                .map(brand -> {
+                    brandRepository.delete(brand);
+                    return brand;
+                })
+                .orElseThrow(() -> new RuntimeException(BRAND_DOESNT_FOUND));
     }
 
     private Brand createBrandFromRequest(BrandRequest request) {

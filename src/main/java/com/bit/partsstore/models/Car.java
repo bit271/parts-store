@@ -20,7 +20,7 @@ public class Car {
     private Brand brand;
 
     @Column(nullable = false)
-    private String name;
+    private String description;
 
     @Column(nullable = false)
     private Integer year;
@@ -31,11 +31,10 @@ public class Car {
     @Column(name = "image_name")
     private String imageName;
 
-    public Car(Integer id, Model model, Brand brand, String name, Integer year, LocalDate dateAdd, String imageName) {
-        this.id = id;
+    public Car(Model model, Brand brand, String description, Integer year, LocalDate dateAdd, String imageName) {
         this.model = model;
         this.brand = brand;
-        this.name = name;
+        this.description = description;
         this.year = year;
         this.dateAdd = dateAdd;
         this.imageName = imageName;
@@ -67,12 +66,12 @@ public class Car {
         this.brand = brand;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getYear() {
