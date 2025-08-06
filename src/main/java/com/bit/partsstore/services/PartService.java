@@ -68,7 +68,7 @@ public class PartService {
                 part.getImageName(),
                 part.getPrice(),
                 part.getAvailableCount(),
-                part.getCar().getName(),
+                part.getCar().getDescription(),
                 part.getCategory().getName()
         );
     }

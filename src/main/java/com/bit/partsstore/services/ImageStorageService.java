@@ -20,14 +20,13 @@ public class ImageStorageService {
 
     /**
      * Saves the uploaded car image to the configured upload directory.
-     * Creates the directory if it does not exist, and replaces the file if it already exists.
+     * Creates the directory if it does not exist and replaces the file if it already exists.
      *
      * @param imageFile the image file to be saved
      * @param filename  the name under which the file should be saved
-     * @throws IOException if an I/O error occurs during saving
      * @throws RuntimeException if saving fails for any reason
      */
-    public void saveCarImage(MultipartFile imageFile, String filename) throws IOException {
+    public void saveCarImage(MultipartFile imageFile, String filename) {
         try {
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
@@ -39,4 +38,20 @@ public class ImageStorageService {
             throw new RuntimeException("Failed to save car image", e);
         }
     }
+
+    /**
+     * Deletes a car image file from the upload directory.
+     *
+     * @param filename the name of the file to delete
+     * @throws RuntimeException if deletion fails
+     */
+    public void deleteCarImage(String filename) {
+        try {
+            Path filePath = uploadPath.resolve(filename);
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to delete car image", e);
+        }
+    }
+
 }

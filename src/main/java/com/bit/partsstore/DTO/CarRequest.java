@@ -3,7 +3,7 @@ package com.bit.partsstore.DTO;
 import org.springframework.web.multipart.MultipartFile;
 
 public class CarRequest {
-    private String  name;
+    private String description;
     private Integer year;
     private Integer brandId;
     private Integer modelId;
@@ -12,20 +12,20 @@ public class CarRequest {
     public CarRequest() {
     }
 
-    public CarRequest(String name, Integer year, Integer brandId, Integer modelId, MultipartFile image) {
-        this.name = name;
+    public CarRequest(String description, Integer year, Integer brandId, Integer modelId, MultipartFile image) {
+        this.description = description;
         this.year = year;
         this.brandId = brandId;
         this.modelId = modelId;
         this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getYear() {

@@ -1,11 +1,11 @@
 package com.bit.partsstore.controllers;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -30,6 +30,16 @@ public class ImageUploadController {
     @PostMapping("/upload/part")
     public ResponseEntity<String> uploadPartImage(@RequestParam("image") MultipartFile file) {
         return handleUpload(file, "parts");
+    }
+
+    @GetMapping("/upload/car/{filename:.+}")
+    public ResponseEntity<Resource> getCarImage(@PathVariable String filename) {
+        return getImageFrom(filename, "cars");
+    }
+
+    @GetMapping("/upload/part/{filename:.+}")
+    public ResponseEntity<Resource> getPartImage(@PathVariable String filename) {
+        return getImageFrom(filename, "parts");
     }
 
     /**
@@ -62,4 +72,41 @@ public class ImageUploadController {
             return ResponseEntity.status(500).body("Upload error: " + e.getMessage());
         }
     }
+
+    /**
+     * Retrieves an image file from the specified subfolder and returns it as a response entity.
+     * The method ensures safe access within the upload directory and validates the existence of the requested file.
+     *
+     * @param filename the name of the image file to retrieve
+     * @param subfolder the subfolder within the upload directory where the file is located
+     * @return a ResponseEntity containing the requested image resource if found,
+     *         a bad request response if access validation fails,
+     *         not found response if the file does not exist,
+     *         or an internal server error response in case of other errors
+     */
+    private ResponseEntity<Resource> getImageFrom(String filename, String subfolder) {
+        try {
+            Path dir = Paths.get(uploadDir).resolve(subfolder);
+            Path filePath = dir.resolve(filename).normalize();
+
+            // Защита от выхода за пределы каталога (безопасность)
+            if (!filePath.startsWith(dir)) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            Resource resource = new UrlResource(filePath.toUri());
+            if (!resource.exists()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            String contentType = Files.probeContentType(filePath);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.parseMediaType(contentType != null ? contentType : "application/octet-stream"))
+                    .body(resource);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
 }

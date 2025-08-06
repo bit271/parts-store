@@ -19,6 +19,7 @@ public class CarService {
 
     private static final String BRAND_NOT_FOUND = "Brand not found";
     private static final String MODEL_NOT_FOUND = "Model not found";
+    private static final String CAR_NOT_FOUND = "Car not found";
 
     private final CarRepository carRepository;
     private final BrandRepository brandRepository;
@@ -60,21 +61,29 @@ public class CarService {
                 .orElseThrow(() -> new RuntimeException(MODEL_NOT_FOUND));
         String uniqueImageName = UUID.randomUUID() + "_" + request.getImage().getOriginalFilename();
 
-        Car car = new Car();
-        car.setDateAdd(LocalDate.now());
-        car.setImageName(uniqueImageName);
-        car.setName(request.getName());
-        car.setYear(request.getYear());
-        car.setBrand(brand);
-        car.setModel(model);
+        return new Car(
+                model,
+                brand,
+                request.getDescription(),
+                request.getYear(),
+                LocalDate.now(),
+                uniqueImageName);
+    }
 
-        return car;
+    public Car deleteCar(int id) {
+        return carRepository.findById(id)
+                .map(car -> {
+                    imageStorageService.deleteCarImage(car.getImageName());
+                    carRepository.delete(car);
+                    return car;
+                })
+                .orElseThrow(() -> new RuntimeException(CAR_NOT_FOUND));
     }
 
     private CarResponse mapToResponse(Car car) {
         return new CarResponse(
                 car.getId(),
-                car.getName(),
+                car.getDescription(),
                 car.getYear(),
                 car.getImageName(),
                 car.getBrand().getName(),
@@ -82,4 +91,5 @@ public class CarService {
                 car.getDateAdd()
         );
     }
+
 }

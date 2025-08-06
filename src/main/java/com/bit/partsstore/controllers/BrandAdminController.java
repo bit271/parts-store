@@ -2,6 +2,7 @@ package com.bit.partsstore.controllers;
 
 import com.bit.partsstore.DTO.BrandRequest;
 import com.bit.partsstore.DTO.BrandResponse;
+import com.bit.partsstore.models.Brand;
 import com.bit.partsstore.services.BrandService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,4 +31,11 @@ public class BrandAdminController {
         BrandResponse response = brandService.addBrand(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Brand> deleteBrand(@PathVariable int id) {
+        Brand deletedBrand = brandService.deleteBrand(id);
+        return ResponseEntity.ok(deletedBrand);
+    }
+
 }
