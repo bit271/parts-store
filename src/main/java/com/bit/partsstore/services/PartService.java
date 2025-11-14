@@ -11,6 +11,7 @@ import com.bit.partsstore.repositories.PartRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PartService {
@@ -21,11 +22,13 @@ public class PartService {
     private final PartRepository partRepository;
     private final CarRepository carRepository;
     private final CategoryRepository categoryRepository;
+    private final ImageStorageService imageStorageService;
 
-    public PartService(PartRepository partRepository, CarRepository carRepository, CategoryRepository categoryRepository) {
+    public PartService(PartRepository partRepository, CarRepository carRepository, CategoryRepository categoryRepository, ImageStorageService imageStorageService) {
         this.partRepository = partRepository;
         this.carRepository = carRepository;
         this.categoryRepository = categoryRepository;
+        this.imageStorageService = imageStorageService;
     }
 
     public List<PartResponse> getParts() {
@@ -36,40 +39,44 @@ public class PartService {
     }
 
     public PartResponse addPart(PartRequest request) {
+        try {
+            Part part = createPartFromRequest(request);
+            Part saved = partRepository.save(part);
+            imageStorageService.savePartImage(request.getImage(), part.getImageName());
+            return mapToResponse(saved);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to add part", e);
+        }
+    }
+
+    private Part createPartFromRequest(PartRequest request) {
         Car car = carRepository.findById(request.getCarId())
                 .orElseThrow(() -> new RuntimeException(CAR_NOT_FOUND_MSG));
         Category category = categoryRepository.findById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException(CATEGORY_NOT_FOUND_MSG));
+        String uniqueImageName = UUID.randomUUID() + "_" + request.getImage().getOriginalFilename();
 
-        Part newPart = createPartFromRequest(request, car, category);
-        Part savedPart = partRepository.save(newPart);
-        return mapToResponse(savedPart);
-    }
-
-    private Part createPartFromRequest(PartRequest partRequest, Car car, Category category) {
-        Part part = new Part();
-        part.setCar(car);
-        part.setCategory(category);
-        part.setName(partRequest.getName());
-        part.setAvailableCount(partRequest.getAvailableCount());
-        part.setPrice(partRequest.getPrice());
-        part.setCatalogNum(partRequest.getCatalogNum());
-        part.setDescription(partRequest.getDescription());
-        part.setImageName(partRequest.getImage());
-        return part;
+        return new Part(
+                car,
+                category,
+                request.getName(),
+                request.getAvailableCount(),
+                request.getPrice(), request.getCatalogNum(),
+                request.getDescription(),
+                uniqueImageName
+        );
     }
 
     private PartResponse mapToResponse(Part part) {
         return new PartResponse(
                 part.getId(),
                 part.getName(),
-                part.getCatalogNum(),
-                part.getDescription(),
-                part.getImageName(),
                 part.getPrice(),
                 part.getAvailableCount(),
-                part.getCar().getDescription(),
-                part.getCategory().getName()
+                part.getCategory().getName(),
+                part.getCatalogNum(),
+                part.getDescription(),
+                part.getImageName()
         );
     }
 }
