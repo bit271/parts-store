@@ -1,5 +1,6 @@
 package com.bit.partsstore.services;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,8 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class ImageStorageService {
 
+    @Value("${server.url}")
+    private String serverUrl;
     private final Path carUploadPath = Paths.get("uploads/cars");
     private final Path partUploadPath = Paths.get("uploads/parts");
 
@@ -33,6 +36,14 @@ public class ImageStorageService {
 
     public void deletePartImage(String filename) {
         deleteImage(filename, partUploadPath);
+    }
+
+    public String getCarImageUrl(String filename) {
+        return serverUrl + "/" + carUploadPath + "/" + filename;
+    }
+
+    public String getPartImageUrl(String filename) {
+        return serverUrl + "/" + partUploadPath + "/" + filename;
     }
 
     /**
